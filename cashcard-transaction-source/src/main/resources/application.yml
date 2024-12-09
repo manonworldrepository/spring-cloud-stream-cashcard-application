@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: transaction-source-application
+  integration:
+    poller:
+      fixed-delay: 5000

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: transaction-enricher-application
+  integration:
+    poller:
+      fixed-delay: 5000
+  cloud:
+    stream:
+      bindings:
+        enrichTransaction-in-0:
+          destination: approvalRequest-out-0

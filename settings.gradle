@@ -1,0 +1,6 @@
+rootProject.name = 'demo'
+
+include 'cashcard-transaction-source'
+include 'cashcard-transaction-enricher'
+include 'cashcard-transaction-sink'
+include 'cashcard-transaction-domain'
