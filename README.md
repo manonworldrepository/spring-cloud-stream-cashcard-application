@@ -87,15 +87,17 @@ You can read more about [toolchain support in the Native Build Tools here](https
 
 ``` $ ./gradlew cashcard-transaction-source:bootRun ```
 
-4. Start the enricher application:
+3. Start the enricher application:
 
 ``` $ ./gradlew cashcard-transaction-enricher:bootRun ```
 
-6. Start the sink application:
+4. Start the sink application:
 
 ``` $ ./gradlew cashcard-transaction-sink:bootRun ```
 
-And finally, approved transactions should be logged in ``` cashcard-transaction-sink/build/tmp/transactions-output.csv ```
+And finally, approved transactions should be logged in
+
+``` cashcard-transaction-sink/build/tmp/transactions-output.csv ```
 
 
 ### Application's Endpoint URL: 
