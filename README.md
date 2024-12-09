@@ -97,6 +97,22 @@ You can read more about [toolchain support in the Native Build Tools here](https
 
 And finally, approved transactions should be logged in ``` cashcard-transaction-sink/build/tmp/transactions-output.csv ```
 
+
+### Application's Endpoint URL: ``` http://localhost:8080/pub ```
+
+Example Payload:
+
+```
+{
+    "id": 1234,
+    "cashCard": {
+        "id": 12345,
+        "owner": "testOwner",
+        "amountRequestedForAuth": "3.14"
+    }
+}
+```
+
 ### Architecture Overview
 
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
