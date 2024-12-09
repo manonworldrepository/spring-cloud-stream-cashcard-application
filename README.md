@@ -98,7 +98,11 @@ You can read more about [toolchain support in the Native Build Tools here](https
 And finally, approved transactions should be logged in ``` cashcard-transaction-sink/build/tmp/transactions-output.csv ```
 
 
-### Application's Endpoint URL: ``` http://localhost:8080/pub ```
+### Application's Endpoint URL: 
+
+``` http://localhost:8080/pub ```
+
+HTTP Method: ``` POST ```
 
 Example Payload:
 
