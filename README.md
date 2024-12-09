@@ -99,6 +99,10 @@ And finally, approved transactions should be logged in
 
 ``` cashcard-transaction-sink/build/tmp/transactions-output.csv ```
 
+And if you want to run the application locally without the native image
+
+``` ./gradlew bootRun  ```
+
 
 ### Application's Endpoint URL: 
 
