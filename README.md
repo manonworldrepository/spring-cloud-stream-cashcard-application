@@ -37,11 +37,15 @@ To create the image, run the following goal:
 $ ./gradlew bootBuildImage
 ```
 
-Then, you can run the app like any other container:
+Then, you can run any of the applications like any other container:
 
 ```
-$ docker run --rm demo:0.0.1-SNAPSHOT
+$ docker run -p 8080:8080 cashcard-transaction-source:0.0.1-SNAPSHOT
+$ docker run -p 8081:8080 cashcard-transaction-sink:0.0.1-SNAPSHOT
+$ docker run -p 8082:8080 cashcard-transaction-enricher:0.0.1-SNAPSHOT
 ```
+
+#### Make sure that your kafka broker instance is accessible to any of those docker images
 
 ### Executable with Native Build Tools
 Use this option if you want to explore more options such as running your tests in a native image.
@@ -57,7 +61,9 @@ $ ./gradlew nativeCompile
 
 Then, you can run the app as follows:
 ```
-$ build/native/nativeCompile/demo
+$ cashcard-transaction-source/build/native/nativeCompile/cashcard-transaction-source
+$ cashcard-transaction-enricher/build/native/nativeCompile/cashcard-transaction-enricher
+$ cashcard-transaction-sink/build/native/nativeCompile/cashcard-transaction-sink
 ```
 
 You can also run your existing tests suite in a native image.
@@ -99,9 +105,13 @@ And finally, approved transactions should be logged in
 
 ``` cashcard-transaction-sink/build/tmp/transactions-output.csv ```
 
-And if you want to run the application locally without the native image
+And if you want to run all applications locally without the native image
 
 ``` ./gradlew bootRun  ```
+
+Also, to test all applications locally without native image
+
+``` ./gradlew clean test ```
 
 
 ### Application's Endpoint URL: 

@@ -29,11 +29,11 @@ ext {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation project(':cashcard-transaction-domain')
 	testImplementation project(':cashcard-transaction-source')
 	testImplementation project(':cashcard-transaction-enricher')
 	testImplementation project(':cashcard-transaction-sink')
-	testImplementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	testImplementation 'org.testcontainers:kafka'
