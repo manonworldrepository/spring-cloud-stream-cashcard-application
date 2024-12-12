@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.awaitility.Awaitility;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -35,6 +36,7 @@ import org.springframework.messaging.Message;
         "spring.cloud.function.definition=sinkToConsole;cashCardTransactionFileSink"
 })
 @Import(TestChannelConfiguration.class)
+@ContextConfiguration(classes=com.example.demo.TransactionSinkApplication.class)
 public class CashCardTransactionSinkTests {
 
     private static final int AWAIT_DURATION = 10;

@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.Message;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +27,7 @@ import com.example.demo.ondemand.CashCardTransactionOnDemand;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import({TestChannelBinderConfiguration.class, CashCardTransactionOnDemand.class})
+@ContextConfiguration(classes=com.example.demo.TransactionSourceApplication.class)
 public class CashCardControllerTests {
 
     @LocalServerPort

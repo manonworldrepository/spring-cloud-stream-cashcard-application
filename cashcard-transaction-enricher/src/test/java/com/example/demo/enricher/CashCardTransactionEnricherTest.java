@@ -15,11 +15,13 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.context.annotation.Import;
 import org.springframework.messaging.Message;
 import org.springframework.integration.support.MessageBuilder;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.example.demo.domain.CashCard;
 import com.example.demo.domain.Transaction;
 
 @SpringBootTest
+@ContextConfiguration(classes=com.example.demo.TransactionEnricherApplication.class)
 @ImportAutoConfiguration(TestChannelBinderConfiguration.class)
 @TestPropertySource(properties = {
     "spring.cloud.stream.bindings.enrichTransaction-in-0.destination=enrichTransactionInput",
