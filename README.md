@@ -13,7 +13,7 @@ $ ./gradlew bootBuildImage
 $ docker compose up -d --build
 ```
 
-Then, you can run any of the applications like any other container:
+Or, you can run any of the applications individually like so:
 
 ```
 $ docker run -p 8080:8080 cashcard-transaction-source:0.0.1-SNAPSHOT
