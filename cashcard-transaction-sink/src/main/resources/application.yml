@@ -6,6 +6,9 @@ spring:
       fixed-delay: 5000
   cloud:
     stream:
+      kafka:
+        binder:
+          brokers: broker:9092 # Switch here to local instance when running on localhost
       bindings:
         sinkToConsole-in-0:
           destination: enrichTransaction-out-0

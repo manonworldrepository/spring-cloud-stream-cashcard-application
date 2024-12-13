@@ -6,6 +6,21 @@ spring:
       fixed-delay: 5000
   cloud:
     stream:
+      kafka:
+        binder:
+          brokers: broker:9092 # Switch here to local instance when running on localhost
       bindings:
         enrichTransaction-in-0:
+          consumer:
+            batch-mode: true
+            configuration:
+              value:
+                deserializer: com.example.demo.serdes.TransactionDeserializer
           destination: approvalRequest-out-0
+        enrichTransaction-out-0:
+          producer:
+            configuration:
+              key:
+                serializer: org.apache.kafka.common.serialization.StringSerializer
+              value:
+                serializer: com.example.demo.serdes.FluxSerializer
