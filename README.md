@@ -136,3 +136,8 @@ Example Payload:
 ### Architecture Overview
 
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
+
+
+# TODO
+
+[ ] Fix the SERDE Bug in the ``` enricher ```
