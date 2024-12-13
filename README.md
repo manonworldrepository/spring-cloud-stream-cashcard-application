@@ -1,40 +1,16 @@
-# Getting Started
 
-### Reference Documentation
-For further reference, please consider the following sections:
+# Cashcard Application
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.0/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.4.0/gradle-plugin/packaging-oci-image.html)
-* [GraalVM Native Image Support](https://docs.spring.io/spring-boot/3.4.0/reference/packaging/native-image/introducing-graalvm-native-images.html)
-* [Cloud Stream](https://docs.spring.io/spring-cloud-stream/reference/)
-* [Spring Reactive Web](https://docs.spring.io/spring-boot/3.4.0/reference/web/reactive.html)
-* [Spring for Apache Kafka](https://docs.spring.io/spring-boot/3.4.0/reference/messaging/kafka.html)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a Reactive RESTful Web Service](https://spring.io/guides/gs/reactive-rest-service/)
-
-### Additional Links
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-* [Configure AOT settings in Build Plugin](https://docs.spring.io/spring-boot/3.4.0/how-to/aot.html)
-
-## GraalVM Native Support
-
-This project has been configured to let you generate either a lightweight container or a native executable.
-It is also possible to run your tests in a native image.
-
-### Lightweight Container with Cloud Native Buildpacks
-If you're already familiar with Spring Boot container images support, this is the easiest way to get started.
-Docker should be installed and configured on your machine prior to creating the image.
-
-To create the image, run the following goal:
+### To create the image, run the following goal:
 
 ```
 $ ./gradlew bootBuildImage
+```
+
+### To run everything in docker containers:
+
+```
+$ docker compose up -d --build
 ```
 
 Then, you can run any of the applications like any other container:
@@ -83,21 +59,17 @@ Effectively, native image compilation is done with the JDK used to execute Gradl
 You can read more about [toolchain support in the Native Build Tools here](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#configuration-toolchains).
 
 
-### Access Broadcast Messages
+### Run applications without docker containers
 
-1. Start Kafka Locally:
-
-``` docker compose up -d --build ```
-
-2. Start the source application: 
+1.  Start the source application: 
 
 ``` $ ./gradlew cashcard-transaction-source:bootRun ```
 
-3. Start the enricher application:
+2. Start the enricher application:
 
 ``` $ ./gradlew cashcard-transaction-enricher:bootRun ```
 
-4. Start the sink application:
+3. Start the sink application:
 
 ``` $ ./gradlew cashcard-transaction-sink:bootRun ```
 
@@ -112,7 +84,6 @@ And if you want to run all applications locally without the native image
 Also, to test all applications locally without native image
 
 ``` ./gradlew clean test ```
-
 
 ### Application's Endpoint URL: 
 
@@ -140,4 +111,4 @@ Example Payload:
 
 # TODO
 
-[ ] Fix the SERDE Bug in the ``` enricher ```
+- [ ] Fix the SERDE Bug in the ``` enricher ```
