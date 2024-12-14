@@ -8,7 +8,9 @@ import org.apache.kafka.common.serialization.Deserializer;
 import java.util.Map;
 import java.io.IOException;
 import com.example.demo.domain.CashCard;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TransactionDeserializer implements Deserializer<Transaction> {
 
     @Override
@@ -20,9 +22,9 @@ public class TransactionDeserializer implements Deserializer<Transaction> {
             return null;
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+
             return objectMapper.readValue(data, Transaction.class);
         } catch (JsonProcessingException e) {
             System.out.println("JsonProcessingException occured while deserializing Transaction" + e.getMessage());

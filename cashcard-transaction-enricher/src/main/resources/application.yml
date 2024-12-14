@@ -9,18 +9,31 @@ spring:
       kafka:
         binder:
           brokers: broker:9092 # Switch here to local instance when running on localhost
+        bindings:
+          enrichTransaction-in-0:
+            consumer:
+              configuration:
+                key:
+                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
+                value:
+                  deserializer: com.example.demo.serdes.TransactionDeserializer
+          enrichTransaction-out-0:
+            producer:
+              configuration:
+                key:
+                  deserializer: org.apache.kafka.common.serialization.StringSerializer
+                value:
+                  serializer: com.example.demo.serdes.EnrichedTransactionSerializer
       bindings:
         enrichTransaction-in-0:
+          binder: kafka
+          group: enrich-consumer
           consumer:
+            use-native-encoding: true
             batch-mode: true
-            configuration:
-              value:
-                deserializer: com.example.demo.serdes.TransactionDeserializer
-          destination: approvalRequest-out-0
+          destination: approval-requests
         enrichTransaction-out-0:
+          binder: kafka
+          destination: enriched-transactions
           producer:
-            configuration:
-              key:
-                serializer: org.apache.kafka.common.serialization.StringSerializer
-              value:
-                serializer: com.example.demo.serdes.FluxSerializer
+            use-native-encoding: true

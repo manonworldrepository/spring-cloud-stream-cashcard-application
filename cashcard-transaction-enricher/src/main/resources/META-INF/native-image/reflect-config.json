@@ -1,0 +1,10 @@
+[
+  {
+    "name": "com.example.demo.serdes.EnrichedTransactionSerializer",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "com.example.demo.serdes.TransactionDeserializer",
+    "allDeclaredConstructors": true
+  }
+]
