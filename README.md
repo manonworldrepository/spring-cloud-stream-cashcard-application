@@ -111,4 +111,4 @@ Example Payload:
 
 # TODO
 
-- [ ] Fix the SERDE Bug in the ``` enricher ```
+- [ ] Fix E2E Tests
