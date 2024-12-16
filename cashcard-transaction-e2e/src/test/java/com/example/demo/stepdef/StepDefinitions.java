@@ -21,8 +21,8 @@ public class StepDefinitions {
         assertTrue(true);
     }
 
-    @Then("No error should be retured")
-    public void noErrorShouldBeRetured() {
+    @Then("No error should be returned")
+    public void noErrorShouldBeReturned() {
         assertTrue(true);
     }
 

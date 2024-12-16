@@ -12,5 +12,5 @@ Feature: File Created Feature
         | Owner | Amount requested for authorization |
         | Test  |                               3.14 |
       When A user submits data
-      Then No error should be retured
+      Then No error should be returned
       And Data should be saved in a CSV file
