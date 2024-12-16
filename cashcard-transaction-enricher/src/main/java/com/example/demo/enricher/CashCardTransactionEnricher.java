@@ -8,7 +8,6 @@ import com.example.demo.domain.Transaction;
 import reactor.core.publisher.Flux;
 import java.util.function.Function;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 public class CashCardTransactionEnricher {

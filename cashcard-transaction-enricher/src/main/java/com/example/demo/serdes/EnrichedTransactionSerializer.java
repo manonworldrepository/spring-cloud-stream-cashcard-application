@@ -2,7 +2,6 @@ package com.example.demo.serdes;
 
 import com.example.demo.domain.EnrichedTransaction;
 import org.apache.kafka.common.serialization.Serializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;

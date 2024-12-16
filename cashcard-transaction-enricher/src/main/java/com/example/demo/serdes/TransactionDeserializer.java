@@ -6,7 +6,6 @@ import com.example.demo.domain.Transaction;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
-import java.io.IOException;
 import com.example.demo.domain.CashCard;
 import org.springframework.stereotype.Service;
 

@@ -29,13 +29,15 @@ public class CashCardTransactionSink {
         return enrichedTransaction -> {
             StringJoiner joiner = new StringJoiner(",");
             StringJoiner enrichedTxnTextual = joiner.add(String.valueOf(enrichedTransaction.id()))
-                    .add(String.valueOf(enrichedTransaction.cashCard().id()))
-                    .add(String.valueOf(enrichedTransaction.cashCard().amountRequestedForAuth()))
-                    .add(enrichedTransaction.cardHolderData().name())
-                    .add(enrichedTransaction.cardHolderData().userId().toString())
-                    .add(enrichedTransaction.cardHolderData().address())
-                    .add(enrichedTransaction.approvalStatus().name());
+                .add(String.valueOf(enrichedTransaction.cashCard().id()))
+                .add(String.valueOf(enrichedTransaction.cashCard().amountRequestedForAuth()))
+                .add(enrichedTransaction.cardHolderData().name())
+                .add(enrichedTransaction.cardHolderData().userId().toString())
+                .add(enrichedTransaction.cardHolderData().address())
+                .add(enrichedTransaction.approvalStatus().name());
+
             Path path = Paths.get(CSV_FILE_PATH);
+
             try {
                 ensureSinkFileExists();
                 Files.writeString(path, enrichedTxnTextual.toString() + "\n", StandardOpenOption.APPEND);
