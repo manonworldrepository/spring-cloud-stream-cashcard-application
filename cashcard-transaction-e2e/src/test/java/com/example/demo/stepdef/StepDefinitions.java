@@ -17,7 +17,7 @@ public class StepDefinitions {
     }
 
     @When("A user submits data")
-    public void a_user_submits_data() {
+    public void aUserSubmitsData() {
         assertTrue(true);
     }
 
