@@ -6,6 +6,7 @@ build/
 !**/src/main/**/target/
 !**/src/test/**/build/
 !**/src/test/**/target/
+!**/target/
 
 ### STS ###
 .apt_generated
