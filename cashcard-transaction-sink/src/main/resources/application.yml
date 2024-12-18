@@ -8,7 +8,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: broker:9092 # Switch here to local instance when running on localhost
+          brokers: localhost:9092 # Switch here to docker instance when running on docker container
       bindings:
         sinkToConsole-in-0:
           destination: enrichTransaction-out-0

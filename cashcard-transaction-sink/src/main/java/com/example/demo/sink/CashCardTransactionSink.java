@@ -19,9 +19,7 @@ public class CashCardTransactionSink {
 
     @Bean
     public Consumer<EnrichedTransaction> sinkToConsole() {
-        return enrichedTransaction -> {
-            System.out.println("Transaction Received: " + enrichedTransaction);
-        };
+        return enrichedTransaction -> System.out.println("Transaction Received: " + enrichedTransaction);
     }
 
     @Bean
@@ -40,7 +38,7 @@ public class CashCardTransactionSink {
 
             try {
                 ensureSinkFileExists();
-                Files.writeString(path, enrichedTxnTextual.toString() + "\n", StandardOpenOption.APPEND);
+                Files.writeString(path, enrichedTxnTextual + "\n", StandardOpenOption.APPEND);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -48,7 +46,11 @@ public class CashCardTransactionSink {
     }
 
     private void ensureSinkFileExists() throws IOException {
-        new File(CSV_FILE_PATH).createNewFile();
+        boolean written = new File(CSV_FILE_PATH).createNewFile();
+
+        if (!written) {
+            throw new IOException("could not write the file");
+        }
     }
 
 }

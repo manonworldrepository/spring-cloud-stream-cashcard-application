@@ -28,7 +28,7 @@ import com.example.demo.domain.Transaction;
     "spring.cloud.stream.bindings.enrichTransaction-out-0.destination=enrichTransactionOutput"
 })
 @Import(TestChannelConfiguration.class)
-public class CashCardTransactionEnricherTest {
+class CashCardTransactionEnricherTest {
 
     @Autowired
     private InputDestination inputDestination;
@@ -37,8 +37,8 @@ public class CashCardTransactionEnricherTest {
     private OutputDestination outputDestination;
 
     @Test
-    void enrichmentServiceShouldAddDataToTransactions() throws IOException {
-        Transaction transaction = new Transaction(1L, new CashCard(123L, "sarah1", 1.00));
+    void enrichmentServiceShouldAddDataToTransactions() {
+        Transaction transaction = new Transaction(1L, new CashCard(123L, "manon", 1.00));
         Message<Transaction> message = MessageBuilder.withPayload(transaction).build();
 
         inputDestination.send(message);

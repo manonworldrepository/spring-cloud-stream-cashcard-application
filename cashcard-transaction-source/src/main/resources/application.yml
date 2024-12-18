@@ -8,4 +8,4 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: broker:9092
+          brokers: localhost:9092 # Switch here to docker instance when running on docker container

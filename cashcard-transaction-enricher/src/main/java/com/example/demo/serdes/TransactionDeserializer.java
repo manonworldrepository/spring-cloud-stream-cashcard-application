@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class TransactionDeserializer implements Deserializer<Transaction> {
 
     @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {}
+    public void configure(Map<String, ?> configs, boolean isKey) { /* Noop */ }
 
     @Override
     public Transaction deserialize(String topic, byte[] data) {
@@ -25,16 +25,11 @@ public class TransactionDeserializer implements Deserializer<Transaction> {
             ObjectMapper objectMapper = new ObjectMapper();
 
             return objectMapper.readValue(data, Transaction.class);
-        } catch (JsonProcessingException e) {
-            System.out.println("JsonProcessingException occured while deserializing Transaction" + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Error deserializing Transaction: " + e.getMessage());
             return new Transaction(0L, new CashCard(0L, "Error", 0.0));
         }
-
-        return new Transaction(1L, new CashCard(1L, "Test Owner", 3.14)); // just to avoid any errors
     }
 
     @Override
-    public void close() {}
+    public void close() { /* Noop */ }
 }

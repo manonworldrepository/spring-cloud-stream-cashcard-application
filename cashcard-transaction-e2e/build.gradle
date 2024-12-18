@@ -36,7 +36,12 @@ dependencies {
 	testImplementation 'io.cucumber:cucumber-spring:7.20.1'
 	testImplementation 'io.cucumber:cucumber-java:7.20.1'
 	testImplementation 'io.cucumber:cucumber-junit:7.20.1'
+	testImplementation project(":cashcard-transaction-domain")
+	testImplementation project(":cashcard-transaction-enricher")
+	testImplementation project(":cashcard-transaction-source")
+	testImplementation project(":cashcard-transaction-sink")
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'

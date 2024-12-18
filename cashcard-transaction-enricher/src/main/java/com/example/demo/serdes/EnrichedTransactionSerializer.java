@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class EnrichedTransactionSerializer implements Serializer<EnrichedTransaction> {
 
     @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {}
+    public void configure(Map<String, ?> configs, boolean isKey) { /* Noop */ }
 
     @Override
     public byte[] serialize(String topic, EnrichedTransaction data) {
@@ -20,11 +20,10 @@ public class EnrichedTransactionSerializer implements Serializer<EnrichedTransac
 
             return objectMapper.writeValueAsBytes(data);
         } catch (JsonProcessingException e) {
-            System.out.println("Error occured while serializing transaction: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void close() {}
+    public void close() { /* Noop */ }
 }

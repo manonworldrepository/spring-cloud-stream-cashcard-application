@@ -9,8 +9,8 @@ Feature: File Created Feature
 
     Scenario: User submits a valid cashcard data
       Given A user has the following cashcard
-        | Owner | Amount requested for authorization |
-        | Test  |                               3.14 |
+        | Owner                               |   Test Owner |
+        | Amount requested for authorization  |         3.14 |
       When A user submits data
       Then No error should be returned
       And Data should be saved in a CSV file
