@@ -13,25 +13,27 @@ jobs:
       contents: read
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Setup GraalVM
-      uses: graalvm/setup-graalvm@v1.2.6
-      with:
-        java-version: 23
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1.2.6
+        with:
+          java-version: 23
 
-    - name: Set up Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: 8.3
+      - name: Grant Execute Permission for Gradle Wrapper
+        run: chmod +x ./gradlew
 
-    - name: Build with Gradle Wrapper on Native Image
-      run: ./gradlew clean spring-boot:build-image -Pnative
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 8.3
 
-    - name: Run Unit Tests with Gradle Wrapper
-      run: ./gradlew clean test
+      - name: Build with Gradle Wrapper on Native Image
+        run: ./gradlew clean spring-boot:build-image -Pnative
 
-    - name: Run Tests on Native Image
-      run: ./gradlew clean test -PnativeTest
+      - name: Run Unit Tests with Gradle Wrapper
+        run: ./gradlew clean test
 
+      - name: Run Tests on Native Image
+        run: ./gradlew clean test -PnativeTest
