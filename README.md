@@ -85,6 +85,10 @@ Also, to test all applications locally without native image
 
 ``` ./gradlew clean test ```
 
+And if you want to test against a native image
+
+``` ./gradlew clean test -PnativeTest ```
+
 ### Application's Endpoint URL: 
 
 ``` http://localhost:8080/pub ```
