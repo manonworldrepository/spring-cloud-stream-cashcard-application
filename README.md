@@ -32,7 +32,9 @@ NOTE: GraalVM 22.3+ is required.
 To create the executable, run the following goal:
 
 ```
-$ ./gradlew nativeCompile
+$ ./gradlew cashcard-transaction-source:nativeCompile
+$ ./gradlew cashcard-transaction-enricher:nativeCompile
+$ ./gradlew cashcard-transaction-sink:nativeCompile
 ```
 
 Then, you can run the app as follows:
@@ -111,8 +113,3 @@ Example Payload:
 ### Architecture Overview
 
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
-
-
-# TODO
-
-- [ ] Add CI/CD Pipeline
