@@ -1,5 +1,5 @@
 
-# Cashcard Application
+# Cashcard Application [![Java CI with Gradle](https://github.com/manonworldrepository/spring-cloud-stream-cashcard-application/actions/workflows/gradle.yml/badge.svg)](https://github.com/manonworldrepository/spring-cloud-stream-cashcard-application/actions/workflows/gradle.yml)
 
 ### To create the image, run the following goal:
 
