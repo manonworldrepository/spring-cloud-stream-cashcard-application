@@ -1,4 +1,6 @@
 spring:
+  server:
+    port: 8084
   application:
     name: transaction-enricher-application
   integration:
