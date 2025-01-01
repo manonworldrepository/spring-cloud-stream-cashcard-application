@@ -113,3 +113,6 @@ Example Payload:
 ### Architecture Overview
 
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
+
+
+TODO: Assign a port number for each application and use its actuator endpoint
