@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Transaction;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.ondemand.CashCardTransactionOnDemand;
 import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class IndexController {
@@ -17,7 +17,10 @@ public class IndexController {
     }
 
     @PostMapping(path = "/pub")
-    public void publish(@RequestBody Transaction transaction) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Mono<Void> publish(@RequestBody Transaction transaction) {
         this.cashCardTransactionOnDemand.publishOnDemand(transaction);
+
+        return Mono.empty();
     }
 }

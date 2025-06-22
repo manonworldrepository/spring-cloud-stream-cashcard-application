@@ -10,11 +10,11 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092 # Switch here to docker instance when running on docker container
+          brokers: broker:9092
       bindings:
         sinkToConsole-in-0:
-          destination: enrichTransaction-out-0
+          destination: enriched-transactions
         cashCardTransactionFileSink-in-0:
-          destination: enrichTransaction-out-0
+          destination: enriched-transactions
     function:
       definition: sinkToConsole;cashCardTransactionFileSink

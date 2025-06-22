@@ -2,19 +2,21 @@ package com.example.demo.service;
 
 import com.example.demo.domain.CashCard;
 import com.example.demo.domain.Transaction;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DataSourceService {
 
     public Transaction getData() {
+        var random = ThreadLocalRandom.current();
+
         CashCard cashCard = new CashCard(
-            new Random().nextLong(),
+            random.nextLong(),
             "sarah1",
-            new Random().nextDouble(100.00)
+            random.nextDouble(100.00)
         );
 
-        return new Transaction(new Random().nextLong(), cashCard);
+        return new Transaction(random.nextLong(), cashCard);
     }
 }

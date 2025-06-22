@@ -6,5 +6,31 @@
   {
     "name": "com.example.demo.serdes.TransactionDeserializer",
     "allDeclaredConstructors": true
+  },
+  {
+    "name": "org.apache.kafka.clients.producer.*",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "org.apiguardian.api.API",
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true,
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
+    "fields": [
+      { "name": "producerLimit" }
+    ]
+  },
+  {
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
+    "fields": [
+      { "name": "consumerIndex" }
+    ]
   }
 ]

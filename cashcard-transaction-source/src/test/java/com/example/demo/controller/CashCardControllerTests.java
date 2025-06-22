@@ -28,7 +28,7 @@ import com.example.demo.ondemand.CashCardTransactionOnDemand;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import({TestChannelBinderConfiguration.class, CashCardTransactionOnDemand.class})
 @ContextConfiguration(classes=com.example.demo.TransactionSourceApplication.class)
-public class CashCardControllerTests {
+class CashCardControllerTests {
 
     @LocalServerPort
     private int port;

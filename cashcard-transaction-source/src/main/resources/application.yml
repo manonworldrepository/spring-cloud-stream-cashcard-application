@@ -8,6 +8,14 @@ spring:
       fixed-delay: 5000
   cloud:
     stream:
+      bindings:
+        approvalRequest-out-0:
+          destination: approval-requests
+          producer:
+            configuration:
+              value:
+                serializer: com.example.demo.serdes.TransactionSerializer
       kafka:
         binder:
-          brokers: localhost:9092 # Switch here to docker instance when running on docker container
+          brokers: broker:9092
+
