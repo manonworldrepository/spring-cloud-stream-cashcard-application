@@ -35,7 +35,8 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation 'org.apiguardian:apiguardian-api:1.1.2'
 	implementation project(':cashcard-transaction-domain')
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.4.1'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.apache.commons:commons-compress:1.26.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'

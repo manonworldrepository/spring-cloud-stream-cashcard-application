@@ -17,8 +17,8 @@ Or, you can run any of the applications individually like so:
 
 ```
 $ docker run -p 8080:8080 cashcard-transaction-source:0.0.1-SNAPSHOT
-$ docker run -p 8081:8080 cashcard-transaction-sink:0.0.1-SNAPSHOT
-$ docker run -p 8082:8080 cashcard-transaction-enricher:0.0.1-SNAPSHOT
+$ docker run -p 8082:8082 cashcard-transaction-sink:0.0.1-SNAPSHOT
+$ docker run -p 8081:8084 cashcard-transaction-enricher:0.0.1-SNAPSHOT
 ```
 
 #### Make sure that your kafka broker instance is accessible to any of those docker images
@@ -91,13 +91,9 @@ And if you want to test against a native image
 
 ``` ./gradlew clean test -PnativeTest ```
 
-### Application's Endpoint URL: 
+### Application's Documentation:
 
-``` http://localhost:8080/pub ```
-
-HTTP Method: ``` POST ```
-
-Example Payload:
+Example Fake Payload to Generate a Message:
 
 ```
 {
@@ -115,4 +111,10 @@ Example Payload:
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
 
 
-TODO: Assign a port number for each application and use its actuator endpoint
+----
+
+TODO
+ - [X] Assign a port number for each application and use its actuator endpoint
+ - [X] Add monitoring [Actuator installed and endpoints revealed]
+ - [X] Add documentation [Inside README]
+ - [ ] Fix failing tests
