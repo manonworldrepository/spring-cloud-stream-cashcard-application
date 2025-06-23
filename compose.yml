@@ -42,3 +42,14 @@ services:
       - "8082:8082"
     hostname: sink
     container_name: sink
+  admin-server:
+    image: admin-server:0.0.1-SNAPSHOT
+    ports:
+      - "9090:9090"
+    hostname: admin-server
+    container_name: admin-server
+    depends_on:
+      - broker
+      - sink
+      - source
+      - enricher

@@ -115,6 +115,7 @@ Example Fake Payload to Generate a Message:
 
 TODO
  - [X] Assign a port number for each application and use its actuator endpoint
- - [X] Add monitoring [Actuator installed and endpoints revealed]
+ - [X] Add monitoring [Actuator and admin server are installed]
  - [X] Add documentation [Inside README]
  - [ ] Fix failing tests
+ - [ ] Register source, sink and enricher in the admin server

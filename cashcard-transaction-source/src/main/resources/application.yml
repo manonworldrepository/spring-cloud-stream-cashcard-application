@@ -1,15 +1,8 @@
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-  api-docs:
-    path: /api-docs
-info:
-  api:
-    title: CashCard Transaction Source API
-    description: API for publishing cash card transactions to a Kafka topic.
-    version: 0.0.1
-
 spring:
+  boot:
+    admin:
+      client:
+        url: http://admin-server:9090
   server:
     port: 8080
   application:
@@ -29,9 +22,11 @@ spring:
       kafka:
         binder:
           brokers: broker:9092
-
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,beans,env
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
