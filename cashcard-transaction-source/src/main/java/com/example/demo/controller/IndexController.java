@@ -19,6 +19,7 @@ public class IndexController {
     @PostMapping(path = "/pub")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Mono<Void> publish(@RequestBody Transaction transaction) {
+        System.out.println(this.getClass().getName() + ": " + transaction);
         this.cashCardTransactionOnDemand.publishOnDemand(transaction);
 
         return Mono.empty();

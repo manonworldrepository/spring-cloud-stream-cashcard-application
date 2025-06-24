@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 public class DataSourceService {
 
     public Transaction getData() {
+        System.out.println(this.getClass().getName() + "::getData()");
+
         var random = ThreadLocalRandom.current();
 
         CashCard cashCard = new CashCard(

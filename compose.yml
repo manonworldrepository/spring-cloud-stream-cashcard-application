@@ -29,7 +29,7 @@ services:
       - source
     image: cashcard-transaction-enricher:0.0.1-SNAPSHOT
     ports:
-      - "8081:8084"
+      - "8084:8084"
     hostname: enricher
     container_name: enricher
   sink:

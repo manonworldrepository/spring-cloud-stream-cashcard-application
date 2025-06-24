@@ -11,6 +11,8 @@ public class TransactionSerializer implements Serializer<Transaction> {
 
     @Override
     public byte[] serialize(String topic, Transaction data) {
+        System.out.println(this.getClass().getName() + ": " + data);
+
         if (data == null) {
             return new byte[0];
         }
