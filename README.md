@@ -19,6 +19,7 @@ Or, you can run any of the applications individually like so:
 $ docker run -p 8080:8080 cashcard-transaction-source:0.0.1-SNAPSHOT
 $ docker run -p 8082:8082 cashcard-transaction-sink:0.0.1-SNAPSHOT
 $ docker run -p 8081:8084 cashcard-transaction-enricher:0.0.1-SNAPSHOT
+$ docker run -p 8081:8084 admin-server:0.0.1-SNAPSHOT
 ```
 
 #### Make sure that your kafka broker instance is accessible to any of those docker images
@@ -35,6 +36,7 @@ To create the executable, run the following goal:
 $ ./gradlew cashcard-transaction-source:nativeCompile
 $ ./gradlew cashcard-transaction-enricher:nativeCompile
 $ ./gradlew cashcard-transaction-sink:nativeCompile
+$ ./gradlew admin-server:nativeCompile
 ```
 
 Then, you can run the app as follows:
@@ -42,6 +44,7 @@ Then, you can run the app as follows:
 $ cashcard-transaction-source/build/native/nativeCompile/cashcard-transaction-source
 $ cashcard-transaction-enricher/build/native/nativeCompile/cashcard-transaction-enricher
 $ cashcard-transaction-sink/build/native/nativeCompile/cashcard-transaction-sink
+$ admin-server/build/native/nativeCompile/admin-server
 ```
 
 You can also run your existing tests suite in a native image.

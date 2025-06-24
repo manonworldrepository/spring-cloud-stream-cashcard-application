@@ -3,6 +3,8 @@ spring:
     admin:
       client:
         url: http://admin-server:9090
+        instance:
+          service-url: http://source:8080
   server:
     port: 8080
   application:
