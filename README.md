@@ -121,4 +121,5 @@ TODO
  - [X] Add monitoring [Actuator and admin server are installed]
  - [X] Add documentation [Inside README]
  - [ ] Fix failing tests
- - [ ] Register source, sink and enricher in the admin server
+ - [X] Register source, sink and enricher in the admin server
+ - [ ] Fix the bug in application connection refused issue in admin panel
