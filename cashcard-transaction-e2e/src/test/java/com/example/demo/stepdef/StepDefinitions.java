@@ -1,3 +1,4 @@
+// In C:/Users/Mosta/Downloads/spring-cloud-stream-cashcard-application/cashcard-transaction-e2e/src/test/java/com/example/demo/stepdef/StepDefinitions.java
 package com.example.demo.stepdef;
 
 import com.example.demo.controller.IndexController;
@@ -5,7 +6,8 @@ import com.example.demo.domain.CashCard;
 import com.example.demo.domain.Transaction;
 import com.example.demo.enricher.CashCardTransactionEnricher;
 import com.example.demo.ondemand.CashCardTransactionOnDemand;
-import com.example.demo.sink.CashCardTransactionSink;
+import com.example.demo.config.CashCardTransactionSink;
+import com.example.demo.sink.CsvWriterService;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,14 +15,16 @@ import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.awaitility.Awaitility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,12 +35,12 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
-@ContextConfiguration
 @CucumberContextConfiguration
 @SpringBootTest(classes = StepDefinitions.OnDemandTestConfig.class, properties = {
+        "csv.output.path=build/tmp/test-transactions-output.csv",
         "spring.cloud.function.definition=enrichTransaction;cashCardTransactionFileSink",
         "spring.cloud.stream.bindings.approvalRequest-out-0.destination=approval-requests",
         "spring.cloud.stream.bindings.enrichTransaction-in-0.destination=approval-requests",
@@ -45,6 +49,7 @@ import static org.junit.jupiter.api.Assertions.*;
     },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class StepDefinitions {
 
     @LocalServerPort
@@ -53,8 +58,10 @@ public class StepDefinitions {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private ResponseEntity<Transaction> response;
+    @Value("${csv.output.path}")
+    private String csvOutputPath;
 
+    private ResponseEntity<Void> response;
     private Transaction transaction;
 
     @Given("A user has the following cashcard")
@@ -67,28 +74,29 @@ public class StepDefinitions {
 
     @When("A user submits data")
     public void aUserSubmitsData() throws IOException {
-        Path path = Paths.get(CashCardTransactionSink.CSV_FILE_PATH);
+        Path path = Paths.get(csvOutputPath);
         Files.deleteIfExists(path);
 
-        response = restTemplate.postForEntity("http://localhost:" + port + "/pub", transaction, Transaction.class);
+        response = restTemplate.postForEntity("http://localhost:" + port + "/pub", transaction, Void.class);
     }
 
     @Then("No error should be returned")
     public void noErrorShouldBeReturned() {
-        assertEquals(HttpStatus.OK, response.getStatusCode(), "HTTP response status is not OK");
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode(), "HTTP response status is not ACCEPTED");
     }
 
     @Then("Data should be saved in a CSV file")
     public void dataShouldBeSavedInACsvFile() throws Exception {
-        Path path = Paths.get(CashCardTransactionSink.CSV_FILE_PATH);
+        Path path = Paths.get(csvOutputPath);
 
         Awaitility.await()
-            .atMost(60, TimeUnit.SECONDS)
-            .pollInterval(5, TimeUnit.SECONDS)
-            .until(() -> Files.exists(path));
+                .atMost(10, TimeUnit.SECONDS)
+                .pollInterval(1, TimeUnit.SECONDS)
+                .until(() -> Files.exists(path));
 
         List<String> lines = Files.readAllLines(path);
-        String csvLine = lines.getFirst();
+        assertThat(lines).hasSize(2);
+        String csvLine = lines.get(1);
 
         assertThat(csvLine).contains(transaction.cashCard().owner());
         assertThat(csvLine).contains(String.valueOf(transaction.cashCard().amountRequestedForAuth()));
@@ -99,7 +107,8 @@ public class StepDefinitions {
         IndexController.class,
         CashCardTransactionOnDemand.class,
         CashCardTransactionEnricher.class,
-        CashCardTransactionSink.class
+        CashCardTransactionSink.class,
+        CsvWriterService.class
     })
     public static class OnDemandTestConfig {}
 }

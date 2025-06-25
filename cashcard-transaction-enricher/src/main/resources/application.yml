@@ -4,7 +4,7 @@ spring:
       client:
         url: http://admin-server:9090
         instance:
-          service-url: http://enricher:8080
+          service-url: http://enricher:8084
   server:
     port: 8084
   application:

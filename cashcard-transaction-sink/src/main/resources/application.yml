@@ -4,7 +4,7 @@ spring:
       client:
         url: http://admin-server:9090
         instance:
-          service-url: http://sink:8080
+          service-url: http://sink:8082
   server:
     port: 8082
   application:

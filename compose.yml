@@ -10,38 +10,15 @@ services:
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://broker:9092,CONTROLLER://:9093
-      - KAFKA_CFG_KRAFT_ID=0
-      - KAFKA_CFG_KRAFT_INTER_BROKER_PROTOCOL=PLAINTEXT
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@localhost:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://broker:9092
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@broker:9093
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-  source:
-    depends_on:
-      - broker
-    image: cashcard-transaction-source:0.0.1-SNAPSHOT
-    ports:
-      - "8080:8080"
-    hostname: source
-    container_name: source
-  enricher:
-    depends_on:
-      - broker
-      - source
-    image: cashcard-transaction-enricher:0.0.1-SNAPSHOT
-    ports:
-      - "8084:8084"
-    hostname: enricher
-    container_name: enricher
-  sink:
-    depends_on:
-      - broker
-      - source
-      - enricher
-    image: cashcard-transaction-sink:0.0.1-SNAPSHOT
-    ports:
-      - "8082:8082"
-    hostname: sink
-    container_name: sink
+    healthcheck:
+      test: [ "CMD-SHELL", "kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1" ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
   admin-server:
     image: admin-server:0.0.1-SNAPSHOT
     ports:
@@ -49,7 +26,35 @@ services:
     hostname: admin-server
     container_name: admin-server
     depends_on:
-      - broker
-      - sink
-      - source
-      - enricher
+      broker:
+        condition: service_healthy
+
+  source:
+    image: cashcard-transaction-source:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    hostname: source
+    container_name: source
+    depends_on:
+      broker:
+        condition: service_healthy
+
+  enricher:
+    image: cashcard-transaction-enricher:0.0.1-SNAPSHOT
+    ports:
+      - "8084:8084"
+    hostname: enricher
+    container_name: enricher
+    depends_on:
+      broker:
+        condition: service_healthy
+
+  sink:
+    image: cashcard-transaction-sink:0.0.1-SNAPSHOT
+    ports:
+      - "8082:8082"
+    hostname: sink
+    container_name: sink
+    depends_on:
+      broker:
+        condition: service_healthy
