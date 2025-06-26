@@ -38,6 +38,8 @@ services:
     depends_on:
       broker:
         condition: service_healthy
+      admin-server:
+        condition: service_started
 
   enricher:
     image: cashcard-transaction-enricher:0.0.1-SNAPSHOT
@@ -48,6 +50,13 @@ services:
     depends_on:
       broker:
         condition: service_healthy
+      admin-server:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "/cnb/process/health-checker", "http://localhost:8084/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   sink:
     image: cashcard-transaction-sink:0.0.1-SNAPSHOT
@@ -58,3 +67,10 @@ services:
     depends_on:
       broker:
         condition: service_healthy
+      admin-server:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "/cnb/process/health-checker", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10

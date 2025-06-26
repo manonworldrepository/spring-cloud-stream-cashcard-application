@@ -51,6 +51,10 @@ dependencyManagement {
 	}
 }
 
+tasks.named('bootBuildImage') {
+	environment = ["BP_HEALTH_CHECKER_ENABLED": "true"]
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
