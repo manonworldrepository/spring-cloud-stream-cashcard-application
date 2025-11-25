@@ -52,4 +52,6 @@ Example Payload:
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
 
 
-TODO: Assign a port number for each application and use its actuator endpoint
+# todo
+
+- [ ] Implement health checks in GitHub workflow for source, enricher, sink and kafka
