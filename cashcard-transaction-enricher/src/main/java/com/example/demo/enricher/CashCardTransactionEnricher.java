@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Bean;
 import com.example.demo.service.EnrichmentService;
 import com.example.demo.domain.EnrichedTransaction;
 import com.example.demo.domain.Transaction;
-import reactor.core.publisher.Flux;
 import java.util.function.Function;
-import java.util.List;
+import lombok.extern.log4j.Log4j2;
 
 @Configuration
+@Log4j2
 public class CashCardTransactionEnricher {
 
     @Bean
@@ -18,10 +18,16 @@ public class CashCardTransactionEnricher {
     }
 
     @Bean
-    public Function<Flux<List<Transaction>>, Flux<EnrichedTransaction>> enrichTransaction(EnrichmentService enrichmentService) {
-        return transaction ->
-            transaction.flatMap(Flux::fromIterable)
-                .map(enrichmentService::enrichTransaction);
+    public Function<Transaction, EnrichedTransaction> enrichTransaction(EnrichmentService enrichmentService) {
+        return transaction -> {
+            log.info("Received transaction for enrichment: {}", transaction);
+
+            EnrichedTransaction enrichedTransaction = enrichmentService.enrichTransaction(transaction);
+
+            log.info("Producing enriched transaction: {}", enrichedTransaction);
+
+            return enrichedTransaction;
+        };
     }
 
 }

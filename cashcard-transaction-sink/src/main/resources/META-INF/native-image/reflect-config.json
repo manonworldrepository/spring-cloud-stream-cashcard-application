@@ -1,11 +1,16 @@
 [
   {
-    "name": "com.example.demo.domain.Transaction",
+    "name": "com.example.demo.domain.EnrichedTransaction",
     "allDeclaredConstructors": true,
     "allPublicMethods": true
   },
   {
     "name": "com.example.demo.domain.CashCard",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "com.example.demo.domain.CardHolderData",
     "allDeclaredConstructors": true,
     "allPublicMethods": true
   }

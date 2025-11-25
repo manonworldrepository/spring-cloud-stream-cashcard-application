@@ -10,7 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -29,22 +29,38 @@ ext {
 }
 
 dependencies {
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.cloud:spring-cloud-stream'
 	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation project(':cashcard-transaction-domain')
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.4.1'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation('org.springframework.boot:spring-boot-starter') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	testImplementation 'org.junit.platform:junit-platform-launcher'
+    testImplementation "org.testcontainers:junit-jupiter"
+    testImplementation "org.testcontainers:kafka"
+    testImplementation "org.testcontainers:testcontainers"
 }
 
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
+}
+configurations.all {
+    resolutionStrategy.force 'org.jctools:jctools-core:3.3.0'
+    exclude group: 'io.netty', module: 'netty-transport-native-epoll'
+}
+
+tasks.named('bootRun') {
+    jvmArgs = ['-Dio.netty.noUnsafe=true']
 }
 
 tasks.named('test') {

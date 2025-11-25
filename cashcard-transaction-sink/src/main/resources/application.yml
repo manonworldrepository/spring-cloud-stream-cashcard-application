@@ -1,20 +1,14 @@
 spring:
-  server:
-    port: 8082
   application:
     name: transaction-sink-application
-  integration:
-    poller:
-      fixed-delay: 5000
   cloud:
+    function:
+      definition: cashCardTransactionFileSink
     stream:
+      bindings:
+        cashCardTransactionFileSink-in-0:
+          destination: enriched-transactions
+          group: sink-consumer
       kafka:
         binder:
-          brokers: localhost:9092 # Switch here to docker instance when running on docker container
-      bindings:
-        sinkToConsole-in-0:
-          destination: enrichTransaction-out-0
-        cashCardTransactionFileSink-in-0:
-          destination: enrichTransaction-out-0
-    function:
-      definition: sinkToConsole;cashCardTransactionFileSink
+          brokers: localhost:9092

@@ -1,13 +1,14 @@
 spring:
-  server:
-    port: 8080
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
   application:
     name: transaction-source-application
-  integration:
-    poller:
-      fixed-delay: 5000
   cloud:
     stream:
+      bindings:
+        approvalRequest-out-0:
+          destination: approval-requests
       kafka:
         binder:
-          brokers: localhost:9092 # Switch here to docker instance when running on docker container
+          brokers: localhost:9092

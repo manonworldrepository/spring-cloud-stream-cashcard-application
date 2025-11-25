@@ -1,8 +1,28 @@
 [
   {
-    "name": "org.apiguardian.api.API",
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueue",
+    "fields": [
+      { "name": "producerIndex" },
+      { "name": "consumerIndex" },
+      { "name": "producerLimit" }
+    ]
+  },
+  {
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
+    "fields": [
+      { "name": "producerIndex" }
+    ]
+  },
+  {
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
+    "fields": [
+      { "name": "consumerIndex" }
+    ]
+  },
+  {
+    "name": "io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
+    "fields": [
+      { "name": "producerLimit" }
+    ]
   }
 ]

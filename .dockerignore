@@ -1,0 +1,10 @@
+# Exclude Gradle cache and build outputs
+.gradle
+**/build
+
+# Exclude Git history
+.git
+
+# Exclude IDE-specific files
+.idea
+.vscode
