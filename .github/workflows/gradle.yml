@@ -29,5 +29,5 @@ jobs:
       - name: Build Application Docker Images
         run: ./gradlew bootBuildImage
 
-      - name: Run End-to-End Tests with Docker Compose
-        run: docker-compose up --build --abort-on-container-exit
+      - name: Run Containers
+        run: docker compose up --build --abort-on-container-exit
