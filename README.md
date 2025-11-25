@@ -26,8 +26,6 @@ $ ./gradlew clean bootBuildImage
 $ docker compose up -d --build
 ```
 
-The container image E2E will perform the tests upon completion of the creation of the docker container
-
 ### Application's Endpoint URL: 
 
 ``` http://localhost:8080/pub ```
