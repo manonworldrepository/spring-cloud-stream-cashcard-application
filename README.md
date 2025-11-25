@@ -14,7 +14,7 @@ The entire system, including the applications and the end-to-end tests, is manag
 
 **1. Build the Application Docker Images**
 
-First, build the native Docker images for the `source`, `enricher`, and `sink` services using the Spring Boot Gradle plugin.
+First, build the native Docker images for the `source`, `enricher`, `sink`, and `e2e-tester` services using the Spring Boot Gradle plugin.
 
 ```
 $ ./gradlew clean bootBuildImage

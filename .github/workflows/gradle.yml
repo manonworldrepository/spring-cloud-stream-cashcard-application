@@ -30,4 +30,4 @@ jobs:
         run: ./gradlew bootBuildImage
 
       - name: Run Containers
-        run: docker compose up --build --abort-on-container-exit
+        run: docker compose up -d --build
