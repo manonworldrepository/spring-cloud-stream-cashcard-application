@@ -48,8 +48,3 @@ Example Payload:
 ### Architecture Overview
 
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
-
-
-# todo
-
-- [ ] Implement health checks in GitHub workflow for source, enricher, sink and kafka

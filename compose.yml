@@ -3,6 +3,12 @@ services:
     image: confluentinc/cp-kafka:7.5.0
     hostname: broker
     container_name: broker
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<> /dev/tcp/broker/9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
     ports:
       - '9092:9092'
     environment:
@@ -41,7 +47,6 @@ services:
   sink:
     depends_on:
       - broker
-      - source
       - enricher
     image: cashcard-transaction-sink:0.0.1-SNAPSHOT
     ports:
