@@ -1,71 +1,42 @@
 package com.example.demo.sink;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
-import org.awaitility.Awaitility;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.Duration;
-import java.util.UUID;
-
 import com.example.demo.domain.ApprovalStatus;
 import com.example.demo.domain.CardHolderData;
 import com.example.demo.domain.CashCard;
 import com.example.demo.domain.EnrichedTransaction;
-import com.example.demo.domain.Transaction;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.stream.binder.test.InputDestination;
+import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.messaging.support.GenericMessage;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Testcontainers
-public class CashCardTransactionSinkTests {
-
-    private static final String SINK_TOPIC = "enrichTransaction-out-0";
-    private static final Path SINK_FILE_PATH = Paths.get(CashCardTransactionSink.CSV_FILE_PATH);
-
-    @Container
-    static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.5.0"));
-
-    @DynamicPropertySource
-    static void kafkaProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.cloud.stream.kafka.binder.brokers", kafka::getBootstrapServers);
-    }
+@Import(TestChannelBinderConfiguration.class)
+class CashCardTransactionSinkTests {
 
     @Autowired
-    private KafkaTemplate<String, EnrichedTransaction> kafkaTemplate;
-
-    @BeforeEach
-    void setUp() throws IOException {
-        Files.deleteIfExists(SINK_FILE_PATH);
-    }
+    private InputDestination input;
 
     @Test
-    void shouldSinkTransactionToFile() {
-        Transaction transaction = new Transaction(1L, new CashCard(123L, "Manon Mccallister", 1.00));
-        CardHolderData cardHolderData = new CardHolderData(UUID.randomUUID(), transaction.cashCard().owner(), "123 Main Street");
-        EnrichedTransaction enrichedTransaction = new EnrichedTransaction(transaction.id(), transaction.cashCard(), ApprovalStatus.APPROVED, cardHolderData);
+    void cashCardTransactionSinkTest() throws IOException {
+        CashCard cashCard = new CashCard(123L, "sarah1", 100.00);
+        CardHolderData cardHolderData = new CardHolderData(UUID.randomUUID(), "Sarah", "123 Main St");
+        EnrichedTransaction enrichedTransaction = new EnrichedTransaction(1L, cashCard, ApprovalStatus.APPROVED, cardHolderData);
 
-        kafkaTemplate.send(SINK_TOPIC, enrichedTransaction);
+        input.send(new GenericMessage<>(enrichedTransaction));
 
-        Awaitility.await().atMost(Duration.ofSeconds(10)).untilAsserted(() -> {
-            File file = SINK_FILE_PATH.toFile();
-            assertThat(file).exists();
-            String content = Files.readString(SINK_FILE_PATH);
-            assertThat(content).contains("Manon Mccallister");
-            assertThat(content).contains(ApprovalStatus.APPROVED.name());
-        });
+        Path path = Paths.get(System.getProperty("user.dir") + "/build/tmp/transactions-output.csv");
+        assertThat(Files.exists(path)).isTrue();
+        assertThat(Files.readString(path)).contains("1,123,100.00,Sarah");
     }
 }

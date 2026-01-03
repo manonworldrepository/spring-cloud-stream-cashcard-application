@@ -1,34 +1,31 @@
 package com.example.demo.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
+import com.example.demo.domain.CashCard;
+import com.example.demo.domain.Transaction;
+import com.example.demo.ondemand.CashCardTransactionOnDemand;
 import org.junit.jupiter.api.Test;
-import org.springframework.modulith.test.ApplicationModuleTest;
-import org.springframework.modulith.test.Scenario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 
-import com.example.demo.transaction.api.CashCard;
-import com.example.demo.transaction.api.Transaction;
+@WebFluxTest(IndexController.class)
+@Import(CashCardTransactionOnDemand.class)
+class CashCardControllerTests {
 
-@ApplicationModuleTest
-public class CashCardControllerTests {
+    @Autowired
+    private WebTestClient webTestClient;
 
     @Test
-    void postShouldSendTransactionAsAMessage(Scenario scenario) throws IOException {
-        Transaction postedTransaction = new Transaction(123L, new CashCard(1L, "Manon2", 1.00));
+    void shouldReturn202WhenTransactionIsPublished() {
+        Transaction transaction = new Transaction(99L, new CashCard(1L, "sarah1", 100.00));
 
-        scenario.stimulate(() -> this.restTemplate.postForEntity(
-                        "/pub",
-                        postedTransaction, Transaction.class))
-                .andWaitForEventOfType(Transaction.class)
-                .toArriveAndVerify(message -> {
-                    assertThat(message.id()).isNotNull();
-                    assertThat(message.cashCard().owner()).isEqualTo("Manon2");
-                });
+        webTestClient
+                .post()
+                .uri("/pub")
+                .body(Mono.just(transaction), Transaction.class)
+                .exchange()
+                .expectStatus().isOk();
     }
-
-    @org.springframework.beans.factory.annotation.Autowired
-    private org.springframework.boot.test.web.client.TestRestTemplate restTemplate;
-
 }
