@@ -53,5 +53,15 @@ jobs:
       - name: Build Application Docker Images
         run: ./gradlew bootBuildImage
 
+  e2e-test:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Run End-to-End Tests
-        run: docker compose up -d --build
+        run: docker compose up --build --abort-on-container-exit
