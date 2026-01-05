@@ -59,8 +59,7 @@ services:
     image: eclipse-temurin:21-jdk-jammy
     container_name: e2e-tester
     depends_on:
-      sink:
-        condition: service_healthy
+      - sink
     volumes:
       - ./:/app
     working_dir: /app
