@@ -18,6 +18,9 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+    all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
 }
 
 repositories {
@@ -39,9 +42,10 @@ dependencies {
 	implementation 'org.apiguardian:apiguardian-api:1.1.2'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation project(':cashcard-transaction-domain')
-    implementation('org.springframework.boot:spring-boot-starter') {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-    }
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
@@ -68,4 +72,5 @@ tasks.named('test') {
 
 tasks.named('bootBuildImage') {
     environment = ['BP_SYFT_ENABLED': 'false']
+    cleanCache = true
 }

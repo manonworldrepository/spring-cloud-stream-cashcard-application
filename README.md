@@ -16,14 +16,14 @@ The entire system, including the applications and the end-to-end tests, is manag
 
 First, build the native Docker images for the `source`, `enricher` and `sink` services using the Spring Boot Gradle plugin.
 
-```
-$ ./gradlew clean bootBuildImage
+```bash
+  ./gradlew clean bootBuildImage
 ```
 
 ### To run everything in docker containers:
 
-```
-$ docker compose up -d --build
+```bash
+  docker compose up -d --build
 ```
 
 ### Application's Endpoint URL: 
@@ -48,3 +48,19 @@ Example Payload:
 ### Architecture Overview
 
 ![Architecture Overview](./system-with-sink.svg "Architecture Overview")
+
+
+### Running Tests
+
+` ./gradlew clean test `
+
+
+### Grafana Dashboard
+
+The system starts with a preconfigured Prometheus datasource and a basic "CashCard System Overview" dashboard.
+
+URL: http://localhost:3000
+
+Username: `admin`
+
+Password: `admin`

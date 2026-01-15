@@ -33,6 +33,9 @@ services:
     container_name: source
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_TOOL_OPTIONS=-Dlog4j2.configurationAllowedProtocols=resource
+      - LOG4J_CONFIGURATION_ALLOWED_PROTOCOLS=resource
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
   enricher:
     depends_on:
       - broker
@@ -44,6 +47,9 @@ services:
     container_name: enricher
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_TOOL_OPTIONS=-Dlog4j2.configurationAllowedProtocols=resource
+      - LOG4J_CONFIGURATION_ALLOWED_PROTOCOLS=resource
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
   sink:
     depends_on:
       - broker
@@ -55,6 +61,31 @@ services:
     container_name: sink
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - JAVA_TOOL_OPTIONS=-Dlog4j2.configurationAllowedProtocols=resource
+      - LOG4J_CONFIGURATION_ALLOWED_PROTOCOLS=resource
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
   e2e-tester:
     image: eclipse-temurin:21-jdk-jammy
     container_name: e2e-tester
