@@ -6,10 +6,10 @@ import com.example.demo.service.EnrichmentService;
 import com.example.demo.domain.EnrichedTransaction;
 import com.example.demo.domain.Transaction;
 import java.util.function.Function;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@Log4j2
+@Slf4j
 public class CashCardTransactionEnricher {
 
     @Bean
