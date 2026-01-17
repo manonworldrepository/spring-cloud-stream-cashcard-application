@@ -1,13 +1,11 @@
-logging:
-  config: classpath:log4j2.yml
 management:
   endpoints:
     web:
       exposure:
         include: health,info,prometheus
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
 spring:
   main:

@@ -1,5 +1,6 @@
 package com.example.demo.sink;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import com.example.demo.domain.EnrichedTransaction;
 import java.util.function.Consumer;
@@ -9,10 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import lombok.extern.log4j.Log4j2;
 
 @Configuration
-@Log4j2
+@Slf4j
 public class CashCardTransactionSink {
 
     public static final String CSV_FILE_PATH = System.getProperty("user.dir") + "/build/tmp/transactions-output.csv";
